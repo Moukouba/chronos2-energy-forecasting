@@ -102,22 +102,10 @@ python main.py dashboard
 streamlit run app.py
 ```
 
-## Screenshots & Visualizations
-
-### Forecasts Dashboard
-Real-time visualization of energy price predictions with quantile confidence intervals:
-
-![Forecasts Dashboard](img/forecasts.png)
-
-### CVaR Analysis Dashboard
-Conditional Value at Risk analysis for risk assessment and portfolio optimization:
-
-![CVaR Dashboard](img/cvar_dashboard.png)
-
 ## Project Structure
 
 ```
-energy_forecast/
+chronos2-energy-forecasting/
 +-- src/
 |   +-- api/                      # FastAPI application
 |   |   +-- api.py                # Main API endpoints
@@ -213,7 +201,35 @@ Content-Type: application/json
 - `optimizer`: Adam/AdamW
 - `early_stopping_patience`: Early stopping patience
 
-## Performance Metrics
+## Screenshots & Visualizations
+
+### Forecasts Dashboard
+Real-time visualization of energy price predictions with quantile confidence intervals:
+
+![Forecasts Dashboard](img/forecasts.png)
+
+### CVaR Analysis Dashboard
+Conditional Value at Risk analysis for risk assessment and portfolio optimization:
+
+![CVaR Dashboard](img/cvar_dashboard.png)
+
+## Model Performance
+
+The model achieves the following MAPE on validation data:
+
+```
+====================================================================
+  MAPE SUMMARY  --  median forecast  (q0.5)
+====================================================================
+             Chunk 1 Chunk 2 Chunk 3 Chunk 4 Chunk 5 Chunk 6 Overall
+Hub                                                                 
+aeci           14.8%   50.2%   10.2%    5.1%   10.1%    4.2%   15.8%
+michigan_hub    3.4%   12.8%    5.7%    3.0%    5.6%    4.2%    5.8%
+minn_hub        7.5%   23.5%   19.0%    8.4%    9.9%    3.3%   11.9%
+====================================================================
+```
+
+### Performance Metrics
 
 The system tracks:
 - **MAPE** (Mean Absolute Percentage Error)
@@ -271,156 +287,13 @@ ls -la outputs/
 batch_size: 2  # instead of 4
 ```
 
-## License
-
-MIT License
-
-## Support
-
-For issues and questions, please open an issue on the repository.
-|   |   +-- configuration.py
-|   +-- pipeline/         # Training and inference pipelines
-|   |   +-- __init__.py
-|   |   +-- training_pipeline.py
-|   |   +-- inference_pipeline.py
-|   +-- entity/           # Data entities
-|   |   +-- __init__.py
-|   |   +-- config_entity.py
-|   +-- utils/            # Utility functions
-|   |   +-- __init__.py
-|   |   +-- common.py
-|   +-- constants/        # Constants
-|       +-- __init__.py
-|       +-- __init__.py
-+-- config/
-|   +-- config.yaml       # Main configuration
-|   +-- params.yaml       # Training parameters
-|   +-- schema.yaml       # Data schema
-+-- outputs/              # Model outputs (created during training)
-+-- app.py                # Streamlit interface
-+-- main.py               # CLI entry point
-+-- requirements.txt      # Dependencies
-+-- setup.py              # Package setup
-```
-
-## Installation
-
-```bash
-cd energy_forecast
-
-# Create virtual environment
-python -m venv venv
-source venv/bin/activate  # Linux/Mac
-# or
-venv\Scripts\activate     # Windows
-
-# Install dependencies
-pip install -r requirements.txt
-
-# Install package
-pip install -e .
-```
-
-## Quick Start
-
-### 1. Start the API Server
-
-```bash
-cd energy_forecast
-python -m uvicorn src.api.api:app --host 0.0.0.0 --port 8000
-```
-
-### 2. Start the Streamlit Dashboard
-
-```bash
-streamlit run app.py
-```
-
-### 3. Train the Model (CLI)
-
-```bash
-python main.py train --data-path /path/to/data.parquet --output-dir outputs
-```
-
-### 4. Make Predictions (CLI)
-
-```bash
-python main.py predict --data-path /path/to/data.parquet --target-col da_energy_aeci_lmpexpost_ac
-```
-
-## Configuration
-
-Edit `config/config.yaml` to customize:
-
-- **Data**: Path, target columns, feature engineering parameters
-- **Model**: Input/output chunk lengths, model name, quantiles
-- **Training**: Batch size, epochs, learning rate, early stopping
-- **Prediction**: Number of chunks, output length
-
-## API Endpoints
-
-### GET `/`
-Root endpoint with API information
-
-### GET `/health`
-Health check
-
-### POST `/predict`
-Make predictions
-
-**Request:**
-```json
-{
-  "data_path": "/path/to/data.parquet",
-  "target_col": "da_energy_aeci_lmpexpost_ac",
-  "num_chunks": 6
-}
-```
-
-### POST `/train`
-Train the model
-
-**Request:**
-```json
-{
-  "data_path": "/path/to/data.parquet",
-  "output_dir": "outputs"
-}
-```
-
-### GET `/metrics`
-Get evaluation metrics
-
-## Dashboard Features
-
-- **Home**: Overview and quick status
-- **Predictions**: Make real-time predictions
-- **Training**: Retrain model with new data
-- **Metrics**: View evaluation metrics and plots
-
-## Model Performance
-
-The model achieves the following MAPE on validation data:
-
-```
-====================================================================
-  MAPE SUMMARY  --  median forecast  (q0.5)
-====================================================================
-             Chunk 1 Chunk 2 Chunk 3 Chunk 4 Chunk 5 Chunk 6 Overall
-Hub                                                                 
-aeci           14.8%   50.2%   10.2%    5.1%   10.1%    4.2%   15.8%
-michigan_hub    3.4%   12.8%    5.7%    3.0%    5.6%    4.2%    5.8%
-minn_hub        7.5%   23.5%   19.0%    8.4%    9.9%    3.3%   11.9%
-====================================================================
-```
-
 ## Deployment
 
 ### Docker
 
 ```bash
-docker build -t energy-forecast .
-docker run -p 8000:8000 -p 8501:8501 energy-forecast
+docker build -t chronos2-energy-forecasting .
+docker run -p 8000:8000 -p 8501:8501 chronos2-energy-forecasting
 ```
 
 ### Production
