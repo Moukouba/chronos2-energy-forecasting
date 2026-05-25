@@ -224,6 +224,7 @@ The system tracks:
 ## Key Dependencies
 
 - **darts**: Time series library with Chronos2
+- **tsflex**: time series feature extraction & processing toolkit
 - **fastapi**: Modern web framework
 - **streamlit**: Interactive dashboards
 - **pytorch-lightning**: Training framework
@@ -401,6 +402,7 @@ Get evaluation metrics
 
 The model achieves the following MAPE on validation data:
 
+```
 ====================================================================
   MAPE SUMMARY  --  median forecast  (q0.5)
 ====================================================================
@@ -410,6 +412,7 @@ aeci           14.8%   50.2%   10.2%    5.1%   10.1%    4.2%   15.8%
 michigan_hub    3.4%   12.8%    5.7%    3.0%    5.6%    4.2%    5.8%
 minn_hub        7.5%   23.5%   19.0%    8.4%    9.9%    3.3%   11.9%
 ====================================================================
+```
 
 ## Deployment
 
@@ -431,6 +434,3 @@ docker run -p 8000:8000 -p 8501:8501 energy-forecast
 
 MIT License
 
-## Contact
-
-For questions or issues, please contact the Energy Forecasting Team.
