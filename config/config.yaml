@@ -1,0 +1,42 @@
+# Configuration for energy forecasting pipeline
+
+data:
+  data_path: "/home/moukouba/equilibrium/model_ready.parquet"
+  target_columns:
+    - "da_energy_aeci_lmpexpost_ac"
+    - "da_energy_michigan_hub_lmpexpost_ac"
+    - "da_energy_minn_hub_lmpexpost_ac"
+  lag_set: [1, 2, 3, 6, 12, 24]
+  rolling_windows: [3, 6, 12, 24]
+  train_split: 0.85
+  freq: "H"
+
+model:
+  input_chunk_length: 168
+  output_chunk_length: 24
+  hub_model_name: "autogluon/chronos-2-small"
+  random_state: 42
+  enable_finetuning:
+    unfreeze: ["*patch_embedding*", "*output_projection*"]
+  likelihood_quantiles: [0.1, 0.5, 0.9]
+
+training:
+  batch_size: 4
+  n_epochs: 20
+  warmup_epochs: 2
+  learning_rate: 1e-5
+  weight_decay: 0.01
+  early_stopping_patience: 5
+  monitor_metric: "val_loss"
+  save_checkpoints: true
+  model_name: "chronos"
+
+prediction:
+  output_chunk_length: 24
+  predict_likelihood_parameters: true
+  num_chunks: 6
+
+output:
+  output_dir: "outputs"
+  checkpoint_dir: "checkpoints"
+  logs_dir: "logs"

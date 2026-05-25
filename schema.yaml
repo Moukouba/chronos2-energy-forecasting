@@ -1,0 +1,56 @@
+# Schema for data validation
+
+# Target variables
+target_columns:
+  - name: "da_energy_aeci_lmpexpost_ac"
+    type: "float"
+    description: "AECI hub energy price"
+  - name: "da_energy_michigan_hub_lmpexpost_ac"
+    type: "float"
+    description: "Michigan hub energy price"
+  - name: "da_energy_minn_hub_lmpexpost_ac"
+    type: "float"
+    description: "Minnesota hub energy price"
+
+# Features
+features:
+  lags:
+    - name: "lag_1"
+      type: "float"
+      description: "1 hour lag"
+    - name: "lag_2"
+      type: "float"
+      description: "2 hour lag"
+    - name: "lag_24"
+      type: "float"
+      description: "24 hour lag"
+  
+  rolling:
+    - name: "roll_mean_3"
+      type: "float"
+      description: "3 hour rolling mean"
+    - name: "roll_std_24"
+      type: "float"
+      description: "24 hour rolling std"
+  
+  future_covariates:
+    - name: "mtlf_fc"
+      type: "float"
+      description: "Load forecast"
+    - name: "_ws_fc"
+      type: "float"
+      description: "Wind forecast"
+    - name: "_td_fc"
+      type: "float"
+      description: "Dewpoint forecast"
+
+# Data types
+data_types:
+  interval_ending_dt_utc: "datetime"
+  default: "float"
+
+# Validation rules
+validation:
+  min_rows: 1000
+  max_missing_pct: 0.1
+  check_duplicates: true

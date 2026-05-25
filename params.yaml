@@ -1,0 +1,28 @@
+# Parameters for energy forecasting
+
+seed: 42
+random_state: 42
+
+# Data parameters
+train_split: 0.85
+validation_split: 0.15
+
+# Model parameters
+input_chunk_length: 168
+output_chunk_length: 24
+batch_size: 4
+n_epochs: 20
+warmup_epochs: 2
+
+# Training parameters
+learning_rate: 0.00001
+weight_decay: 0.01
+early_stopping_patience: 5
+
+# Feature engineering
+lag_set: [1, 2, 3, 6, 12, 24]
+rolling_windows: [3, 6, 12, 24]
+
+# Evaluation
+num_chunks: 6
+output_chunk_length: 24
