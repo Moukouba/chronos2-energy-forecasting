@@ -1,6 +1,6 @@
-# Energy Forecasting Pipeline ?
+# Energy Forecasting Pipeline 
 
-A **production-ready** time series energy forecasting system using **Chronos2 Model** with FastAPI, Streamlit, and complete ML pipeline orchestration.
+A **production-ready** multivariate time series energy forecasting system using **Chronos2 Model** with FastAPI, Streamlit, and complete ML pipeline orchestration. It supports forecasting multiple energy series and their covariates, enabling conditional forecasts with exogenous features such as weather, demand, and holiday indicators.
 
 ## Features
 
@@ -28,6 +28,42 @@ A **production-ready** time series energy forecasting system using **Chronos2 Mo
 - Structured logging and monitoring
 - ONNX model export support
 - Checkpoint management and model versioning
+
+## Screenshots & Visualizations
+
+### Forecasts Dashboard
+Real-time visualization of energy price predictions with quantile confidence intervals:
+
+![Forecasts Dashboard](img/forecasts.png)
+
+### CVaR Analysis Dashboard
+Conditional Value at Risk analysis for risk assessment and portfolio optimization:
+
+![CVaR Dashboard](img/cvar_dashboard.png)
+
+## Model Performance
+
+The model achieves the following MAPE on validation data:
+
+```
+====================================================================
+  MAPE SUMMARY  --  median forecast  (q0.5)
+====================================================================
+             Chunk 1 Chunk 2 Chunk 3 Chunk 4 Chunk 5 Chunk 6 Overall
+Hub                                                                 
+aeci           14.8%   50.2%   10.2%    5.1%   10.1%    4.2%   15.8%
+michigan_hub    3.4%   12.8%    5.7%    3.0%    5.6%    4.2%    5.8%
+minn_hub        7.5%   23.5%   19.0%    8.4%    9.9%    3.3%   11.9%
+====================================================================
+```
+
+### Performance Metrics
+
+The system tracks:
+- **MAPE** (Mean Absolute Percentage Error)
+- **MAE** (Mean Absolute Error)
+- **RMSE** (Root Mean Squared Error)
+- **Chunk-wise MAPE**: Performance for each prediction chunk
 
 ## Quick Start
 
@@ -200,42 +236,6 @@ Content-Type: application/json
 - `weight_decay`: L2 regularization
 - `optimizer`: Adam/AdamW
 - `early_stopping_patience`: Early stopping patience
-
-## Screenshots & Visualizations
-
-### Forecasts Dashboard
-Real-time visualization of energy price predictions with quantile confidence intervals:
-
-![Forecasts Dashboard](img/forecasts.png)
-
-### CVaR Analysis Dashboard
-Conditional Value at Risk analysis for risk assessment and portfolio optimization:
-
-![CVaR Dashboard](img/cvar_dashboard.png)
-
-## Model Performance
-
-The model achieves the following MAPE on validation data:
-
-```
-====================================================================
-  MAPE SUMMARY  --  median forecast  (q0.5)
-====================================================================
-             Chunk 1 Chunk 2 Chunk 3 Chunk 4 Chunk 5 Chunk 6 Overall
-Hub                                                                 
-aeci           14.8%   50.2%   10.2%    5.1%   10.1%    4.2%   15.8%
-michigan_hub    3.4%   12.8%    5.7%    3.0%    5.6%    4.2%    5.8%
-minn_hub        7.5%   23.5%   19.0%    8.4%    9.9%    3.3%   11.9%
-====================================================================
-```
-
-### Performance Metrics
-
-The system tracks:
-- **MAPE** (Mean Absolute Percentage Error)
-- **MAE** (Mean Absolute Error)
-- **RMSE** (Root Mean Squared Error)
-- **Chunk-wise MAPE**: Performance for each prediction chunk
 
 ## Key Dependencies
 
